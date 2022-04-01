@@ -20,7 +20,10 @@ public class GameManager : MonoBehaviour
     public TextMesh P2Points;
 
     public TextMesh PName;
+
+    public TextMesh PGana;
     
+    private int puntajes;
 
     // Start is called before the first frame update
     private void Awake()
@@ -33,8 +36,29 @@ public class GameManager : MonoBehaviour
         P1Points.text = PuntosP1.ToString();
         P2Points.text = PuntosP2.ToString();
         PName.text = "Player 1";
+        
+        
     }
 
+    void Gana(){
+        puntajes = BoardManager.Instance.Setpuntajemaximo();
+        Debug.Log("puntos"+ PuntosP1+" "+PuntosP2);
+        int puntMax=(puntajes-1)*(puntajes-1);
+        int pp=PuntosP1+PuntosP2;
+        if(puntMax == pp){
+            //Debug.Log("Gana");
+            if(PuntosP1>PuntosP2){
+                PGana.text = "Win Player 1";
+            }else if(PuntosP1<PuntosP2){
+                PGana.text = "Win Player 2";
+            }
+            else{
+                PGana.text = "Empate";
+            }
+        }
+        UpdateGameState(GameState.end);
+        
+    }
     void Start()
     {
         _gameState = GameState.Start;
@@ -93,6 +117,7 @@ public class GameManager : MonoBehaviour
                 //Pasa los puntos a Texto y esot se muestra en la pantalla
                 P2Points.text = PuntosP2.ToString();
                 //Se actualiza el GameState para que el player2 pueda jugar un turno mas
+                Gana();
                 UpdateGameState(GameState.player2);
                 //Se devuelve el valor a Contp2 sino ocurre esto el player2 juega de manera indefinida
                 contp2 = 2;
@@ -100,6 +125,7 @@ public class GameManager : MonoBehaviour
             case GameState.player2:
                 //Para entender esto porfavor leer el codigo de player1
                 PuntosP1 += puntos;
+                Gana();
                 //Debug.Log("PuntosP2: " + PuntosP2);
                 P1Points.text = PuntosP1.ToString();
                 UpdateGameState(GameState.player1);

@@ -26,6 +26,7 @@ public class BoardManager : MonoBehaviour
     public Button button;
     public Canvas canvas;
 
+    public int Tam;
     private void Awake()
     {
         Instance = this;
@@ -37,13 +38,16 @@ public class BoardManager : MonoBehaviour
         button.onClick.AddListener(()=>{
             //canvas.gameObject.SetActive(false);
                 var valor =dropdown.value;
-                int tamaño= int.Parse(dropdown.options[valor].text);
-                GenerateBoard(tamaño);
+                Tam= int.Parse(dropdown.options[valor].text);
+                GenerateBoard(Tam);
                 Destroy(canvas.gameObject);
         });
 
         cont = 2;
+    }
 
+    public int Setpuntajemaximo(){
+        return Tam;
     }
 
     private async void GenerateBoard( int tamaño)
@@ -58,8 +62,9 @@ public class BoardManager : MonoBehaviour
 
         }
         var center = new Vector2((float)tamaño / 2 - 0.5f, (float)tamaño / 2 - 0.5f);
-        Camera.main.transform.position = new Vector3(center.x, center.y, -5);
-        Camera.main.orthographicSize = (float)tamaño / 2 + 0.5f;
+        Camera.main.orthographicSize = (float)tamaño/ 2 + 1.5f;
+        Camera.main.transform.position = new Vector3(center.x-2, center.y, -5);
+        
     }
 
 
@@ -68,7 +73,7 @@ public class BoardManager : MonoBehaviour
     {
         //no tocar GameManager.Instance.SwitchPlayer();
         GameManager.Instance.SwitchPlayer();
-        Debug.Log(GameManager.Instance.GetGameState);
+        //Debug.Log(GameManager.Instance.GetGameState);
         var Actualplayer=GameManager.Instance.GetGameState;
         cont = cont - 1;
 
