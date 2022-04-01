@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using TMPro;
+using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
@@ -20,6 +22,10 @@ public class BoardManager : MonoBehaviour
     //Intento de que la linea se valida o no
     public Counter CounterPrefab;
 
+    public Dropdown dropdown;
+    public Button button;
+    public Canvas canvas;
+
     private void Awake()
     {
         Instance = this;
@@ -28,24 +34,32 @@ public class BoardManager : MonoBehaviour
     }
     void Start()
     {
-        GenerateBoard();
+        button.onClick.AddListener(()=>{
+            //canvas.gameObject.SetActive(false);
+                var valor =dropdown.value;
+                int tamaño= int.Parse(dropdown.options[valor].text);
+                GenerateBoard(tamaño);
+                Destroy(canvas.gameObject);
+        });
+
         cont = 2;
 
     }
 
-    private async void GenerateBoard()
+    private async void GenerateBoard( int tamaño)
     {
-        for (int i = 0; i < Width; i++)
+        for (int i = 0; i < tamaño; i++)
         {
-            for (int j = 0; j < Height; j++)
+            for (int j = 0; j < tamaño; j++)
             {
                 var p = new Vector2(i, j);
                 Instantiate(PointPrefab, p, Quaternion.identity);
             }
 
         }
-        var center = new Vector2((float)Height / 2 - 0.5f, (float)Width / 2 - 0.5f);
+        var center = new Vector2((float)tamaño / 2 - 0.5f, (float)tamaño / 2 - 0.5f);
         Camera.main.transform.position = new Vector3(center.x, center.y, -5);
+        Camera.main.orthographicSize = (float)tamaño / 2 + 0.5f;
     }
 
 
@@ -79,6 +93,8 @@ public class BoardManager : MonoBehaviour
             var pointCC=counter2.GetComponentsInChildren<CircleCollider2D>();
             float Y=PuntoActualp1.GetComponent<Transform>().position.y - PuntoAnteriorp1.GetComponent<Transform>().position.y;
             float X=PuntoActualp1.GetComponent<Transform>().position.x - PuntoAnteriorp1.GetComponent<Transform>().position.x;
+
+
             if (Y == 1 && X==0)
             {
                 //mueve la linea a puntoanterior
