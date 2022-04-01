@@ -23,6 +23,7 @@ public class Point : MonoBehaviour
             Inner.GetComponent<SpriteRenderer>().color=Color.blue;
             
             BoardManager.Instance.SetPoint(this);
+            
         }else{
             Inner.GetComponent<SpriteRenderer>().color=Color.red;
             BoardManager.Instance.SetPoint(this);
