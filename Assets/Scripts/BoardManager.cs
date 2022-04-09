@@ -4,6 +4,8 @@ using UnityEngine;
 //using TMPro;
 using UnityEngine.UI;
 
+
+
 public class BoardManager : MonoBehaviour
 {
 
@@ -69,7 +71,7 @@ public class BoardManager : MonoBehaviour
 
 
 
-    public void SetPoint(Point p)
+    public  void SetPoint(Point p)
     {
         //no tocar GameManager.Instance.SwitchPlayer();
         GameManager.Instance.SwitchPlayer();
@@ -98,7 +100,7 @@ public class BoardManager : MonoBehaviour
             var pointCC=counter2.GetComponentsInChildren<CircleCollider2D>();
             float Y=PuntoActualp1.GetComponent<Transform>().position.y - PuntoAnteriorp1.GetComponent<Transform>().position.y;
             float X=PuntoActualp1.GetComponent<Transform>().position.x - PuntoAnteriorp1.GetComponent<Transform>().position.x;
-
+            
 
             if (Y == 1 && X==0)
             {
@@ -106,6 +108,7 @@ public class BoardManager : MonoBehaviour
                 line.transform.position = PuntoAnteriorp1.GetComponent<Transform>().position + new Vector3(0, 0.5f, 0);
                 //mmueve counter a line
                 counter.transform.position = line.GetComponent<Transform>().position + new Vector3(0.5f, 0, 0);
+                
                 c1=Physics2D.OverlapCircle(pointC[1].transform.position, 0.1f, linea);
                 c2=Physics2D.OverlapCircle(pointC[2].transform.position, 0.1f, linea);
                 c3 = Physics2D.OverlapCircle(pointC[3].transform.position, 0.1f, linea);
@@ -115,6 +118,7 @@ public class BoardManager : MonoBehaviour
                 c4=true;
                 c5 = Physics2D.OverlapCircle(pointCC[2].transform.position, 0.1f, linea);
                 c6 = Physics2D.OverlapCircle(pointCC[3].transform.position, 0.1f, linea);
+                //esperar un frame y luedo eliminar la linea
 
                 
             }
@@ -195,7 +199,7 @@ public class BoardManager : MonoBehaviour
 
     }
 
-
+    
 
 
 
